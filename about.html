@@ -1,0 +1,33 @@
+<!-- about-us.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>About Us | PhionixTravel</title>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("template.html")
+        .then(response => response.text())
+        .then(template => {
+          document.body.innerHTML = template;
+          document.getElementById("page-content").innerHTML = `
+            <section>
+              <h2>About Our Company</h2>
+              <p>At PhionixTravel, we aim to make your travel dreams a reality by offering personalized recommendations and tools for seamless trips.</p>
+              <h2>Meet Our Team</h2>
+              <ul>
+                <li><strong>John Doe:</strong> CEO</li>
+                <li><strong>Jane Smith:</strong> Marketing Manager</li>
+                <li><strong>Emily Johnson:</strong> Travel Consultant</li>
+              </ul>
+            </section>`;
+          // Remove search bar and buttons
+          document.querySelector(".search-bar").style.display = "none";
+        });
+    });
+  </script>
+</head>
+
+<body></body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhionixTravel - Main Page</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #template-container {
+      display: flex;
+      flex-direction: column;
+      flex: 1; /* Take all available height */
+    }
+
+    .main-content {
+      flex: 1; /* Take up remaining space */
+      background: url('background.jpg') no-repeat center center / cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .main-content-inner {
+      max-width: 800px;
+      width: 90%;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      color: white;
+    }
+
+    .main-content-inner h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #FFD700;
+    }
+
+    .main-content-inner p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .main-content-inner a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 12px 24px;
+      background: #007b83;
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      border-radius: 30px;
+      transition: background-color 0.3s;
+    }
+
+    .main-content-inner a:hover {
+      background-color: #00c6a7;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="template-container"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      fetch("template.html")
+        .then(response => response.text())
+        .then(template => {
+          document.getElementById("template-container").innerHTML = template;
+
+          // Main page content
+          const pageContent = `
+            <div class="main-content">
+              <div class="main-content-inner">
+                <h1>Welcome to PhionixTravel</h1>
+                <p>Discover amazing destinations with us!</p>
+                <a href="destination.html">Explore Now</a>
+              </div>
+            </div>
+          `;
+
+          document.getElementById("page-content").innerHTML = pageContent;
+        });
+    });
+  </script>
+</body>
+
+</html>
