@@ -3,6 +3,8 @@
 
 // Execute search based on user input
 function executeSearch() {
+    console.log("Search button clicked!"); // Debugging log
+
     const searchInput = document.getElementById("search-input");
     const resultsContainer = document.getElementById("results-container");
   
@@ -24,6 +26,8 @@ function executeSearch() {
   
   // Reset the input field and results container
   function resetSearch() {
+    console.log("Reset button clicked!"); // Debugging log
+
     const searchInput = document.getElementById("search-input");
     const resultsContainer = document.getElementById("results-container");
   
@@ -85,7 +89,7 @@ function executeSearch() {
         resultsContainer.appendChild(card);
       });
     });
-  }
+ }
   
   // Create a card element for each result
   function createCard(title, imageUrl, description) {
@@ -109,11 +113,4 @@ function executeSearch() {
     return card;
   }
   
-  // Attach event listeners for search and reset buttons
-  document.addEventListener("DOMContentLoaded", () => {
-    const searchButton = document.getElementById("search-button");
-    const resetButton = document.getElementById("reset-button");
   
-    searchButton.addEventListener("click", executeSearch);
-    resetButton.addEventListener("click", resetSearch);
-  });

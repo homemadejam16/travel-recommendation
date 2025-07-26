@@ -20,25 +20,28 @@
     body {
       display: flex;
       flex-direction: column;
+      font-family: Arial, sans-serif;
     }
 
     #template-container {
       display: flex;
       flex-direction: column;
-      flex: 1; /* Take all available height */
+      flex: 1;
     }
 
     .main-content {
-      flex: 1; /* Take up remaining space */
-      background: url('background.jpg') no-repeat center center / cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      flex: 1;
+      display: flex; /* Flexbox applied to divide into left and right sections */
+      justify-content: space-between; /* Add spacing between left and right sections */
+      align-items: flex-start; /* Align sections at the top */
+      padding: 20px;
+      gap: 20px; /* Add a gap between the two sections */
     }
 
     .main-content-inner {
+      flex: 2; /* Left section takes two-thirds of the space */
       max-width: 800px;
-      width: 90%;
+      width: 100%;
       background: rgba(0, 0, 0, 0.5);
       padding: 20px;
       border-radius: 8px;
@@ -61,7 +64,7 @@
       display: inline-block;
       margin-top: 10px;
       padding: 12px 24px;
-      background: #007b83;
+      background: transparent;
       color: white;
       text-decoration: none;
       font-size: 16px;
@@ -70,6 +73,71 @@
     }
 
     .main-content-inner a:hover {
+      background-color: transparent;
+    }
+
+    /* Updated Style: Transparent Background */
+    #page-content {
+      background: transparent; /* Set transparent for page-content */
+    }
+
+    .results-container {
+      flex: 1; /* Right section takes one-third of the space */
+      background: transparent; /* Transparent for results-container */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+    }
+
+    .results-container h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #007b83;
+      text-align: center;
+    }
+
+    .results-container .result-item {
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #f7f7f7;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      transition: transform 0.2s;
+    }
+
+    .results-container .result-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .search-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar input {
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #007b83;
+      border-radius: 4px;
+      width: 300px;
+    }
+
+    .search-bar button {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      background-color: #007b83;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .search-bar button:hover {
       background-color: #00c6a7;
     }
   </style>
@@ -81,31 +149,75 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       fetch("template.html")
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok){
+                throw new Error(`Failed to load template.html: ${response.status}`);
+            }
+            return response.text();
+        })
         .then(template => {
           document.getElementById("template-container").innerHTML = template;
 
-          // Main page content
+          // Main page content for the #page-content div
           const pageContent = `
-            <div class="main-content">
-              <div class="main-content-inner">
+            <div id="page-content" class="main-content">
+              <!-- Left Section: Main Content -->
+              <div id="main-content-inner" class="main-content-inner">
                 <h1>Discover</h1>
-                <h1>your next adventure</h1>
+                <h1>Your Next Adventure</h1>
                 <h1>with Phionix Travel!</h1>
-                <p>We specialize in crafting unique and unforgettable travel experiences, </p>
+                <p>We specialize in crafting unique and unforgettable travel experiences,</p>
                 <p>tailored to your interests and desires.</p>
-                <p>Whether you're seeking thrilling adventures, cultural immersion, or relaxing escapes, </p>
+                <p>Whether you're seeking thrilling adventures, cultural immersion, or relaxing escapes,</p>
                 <p>we have the perfect tour for you.</p>
                 <p>Let us handle the details while you create lasting memories!</p>
-                
-                <a href="destination.html">Explore Now</a>
               </div>
-            </div>
-          `;
 
+              <!-- Right Section: Results Container -->
+              <div id="results-container" class="results-container">
+              </div>
+            </div>`;
           document.getElementById("page-content").innerHTML = pageContent;
-        });
-    });
+
+          // Add Search Bar Functionality
+          const searchBar = document.createElement("div");
+          searchBar.className = "search-bar";
+          searchBar.innerHTML = `
+            <input id="search-input" type="text" placeholder="Search for beach, temple, or country">
+            <button id="search-button">Search</button>
+            <button id="reset-button">Reset</button>
+          `;
+          const headerRight = document.querySelector(".header-right");
+          if (headerRight) {
+            headerRight.appendChild(searchBar);
+          } else {
+            console.error("Error: .header-right not found in template.html");
+          }
+
+          
+          // Attach travel.js after injecting content dynamically
+            const travelScript = document.createElement("script");
+            travelScript.src = "travel_recommendation.js";
+            travelScript.onload = () => {
+                console.log("travel.js loaded successfully");
+
+                const searchButton = document.getElementById("search-button");
+                const resetButton = document.getElementById("reset-button");
+
+                searchButton.addEventListener("click", executeSearch);
+                resetButton.addEventListener("click", resetSearch);
+            };
+            travelScript.onerror = () => {
+                console.error("Failed to load travel.js");
+            };
+            document.body.appendChild(travelScript);
+            })
+            .catch(error => {
+                console.error("Error loading template:", error);
+            });
+        });         
+
+        
   </script>
 </body>
 
