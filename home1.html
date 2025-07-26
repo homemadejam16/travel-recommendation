@@ -20,18 +20,20 @@
     body {
       display: flex;
       flex-direction: column;
+      font-family: Arial, sans-serif;
     }
 
     #template-container {
       display: flex;
       flex-direction: column;
-      flex: 1; /* Take all available height */
+      flex: 1;
     }
 
     .main-content {
-      flex: 1; /* Take up remaining space */
+      flex: 1;
       background: url('background.jpg') no-repeat center center / cover;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
     }
@@ -72,6 +74,48 @@
     .main-content-inner a:hover {
       background-color: #00c6a7;
     }
+
+    .search-bar {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar input {
+      padding: 10px;
+      font-size: 16px;
+      border: 2px solid #007b83;
+      border-radius: 4px;
+      width: 300px;
+    }
+
+    .search-bar button {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      background-color: #007b83;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .search-bar button:hover {
+      background-color: #00c6a7;
+    }
+
+    #results-container {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.8);
+      width: 90%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
 </head>
 
@@ -91,19 +135,28 @@
               <div class="main-content-inner">
                 <h1>Discover</h1>
                 <h1>your next adventure</h1>
-                <h1>with Phionix Travel!</h1>
-                <p>We specialize in crafting unique and unforgettable travel experiences, </p>
+                <h1>with Phionix Travel !</h1>
+                <p>We specialize in crafting unique and unforgettable travel experiences,</p>
                 <p>tailored to your interests and desires.</p>
-                <p>Whether you're seeking thrilling adventures, cultural immersion, or relaxing escapes, </p>
+                <p>Whether you're seeking thrilling adventures, cultural immersion, or relaxing escapes,</p>
                 <p>we have the perfect tour for you.</p>
                 <p>Let us handle the details while you create lasting memories!</p>
-                
-                <a href="destination.html">Explore Now</a>
+                <div class="search-bar">
+                  <input id="search-input" type="text" placeholder="Search for beach, temple, or country">
+                  <button id="search-button">Search</button>
+                  <button id="reset-button">Reset</button>
+                </div>
+                <div id="results-container"></div>
               </div>
             </div>
           `;
 
           document.getElementById("page-content").innerHTML = pageContent;
+
+          // Attach travel.js after injecting content dynamically
+          const travelScript = document.createElement("script");
+          travelScript.src = "travel.js";
+          document.body.appendChild(travelScript);
         });
     });
   </script>
